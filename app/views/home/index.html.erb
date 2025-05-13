@@ -1,0 +1,74 @@
+<!-- Weather Forecast Form -->
+<div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+  <div class="relative py-3 sm:max-w-xl sm:mx-auto">
+    <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+      <div class="max-w-md mx-auto">
+        <div class="divide-y divide-gray-200">
+          <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+            <h1 class="text-3xl font-bold text-center mb-8" style="color: blue;">Weather Forecast</h1>
+            
+            <div data-controller="debug gmp-autocomplete" class="block overflow-hidden">
+              <div id="autocomplete-container" data-gmp-autocomplete-target="autocompleteInput"></div>
+              <!-- Container for the *current* forecast -->
+              <div id="current-forecast-display" class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg shadow-sm mb-4">
+                <p id="selected-place-title" data-gmp-autocomplete-target="placeTitle" class="font-semibold text-lg mb-2"></p>
+                <pre id="selected-place-info" data-gmp-autocomplete-target="placeInfo" class="text-sm text-gray-700 whitespace-pre-wrap"></pre>
+              </div>
+
+              <!-- Container for the history -->
+              <div data-gmp-autocomplete-target="resultsList" class="mt-4 space-y-4">
+                <!-- Forecast history will be prepended here -->
+              </div>
+            </div>
+            
+            <!-- Weather Information -->
+            <div id="weather-info" class="mt-6 p-4 bg-gray-50 rounded-lg hidden">
+              <div id="weather-details" class="space-y-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* 
+   * Always set the map height explicitly to define the size of the div element
+   * that contains the map. 
+   */
+  #map {
+    height: 100%;
+  }
+
+  /* 
+   * Optional: Makes the sample page fill the window. 
+   */
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  p {
+    font-family: Roboto, sans-serif;
+    font-weight: bold;
+  }
+
+  .weather-card {
+    @apply bg-white p-4 rounded-lg shadow-sm;
+  }
+
+  .weather-item {
+    @apply flex items-center space-x-2;
+  }
+
+  .weather-label {
+    @apply font-semibold text-gray-600;
+  }
+
+  .weather-value {
+    @apply text-gray-800;
+  }
+</style>

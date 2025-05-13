@@ -1,24 +1,12 @@
 require_relative "boot"
 
-require "rails"
-# Pick the frameworks you want:
-require "active_model/railtie"
-require "active_job/railtie"
-require "active_record/railtie"
-require "active_storage/engine"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_mailbox/engine"
-require "action_text/engine"
-require "action_view/railtie"
-require "action_cable/engine"
-# require "rails/test_unit/railtie"
+require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module AppleChallenge
+module WeatherForecast
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
@@ -36,9 +24,36 @@ module AppleChallenge
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    # Only loads a smaller set of middleware suitable for API only apps.
-    # Middleware like session, flash, cookies can be added back manually.
-    # Skip views, helpers and assets when generating a new resource.
-    config.api_only = true
+    # Configure Content Security Policy
+    config.content_security_policy do |policy|
+      policy.default_src :self, :https
+      policy.font_src    :self, :https, :data
+      policy.img_src     :self, :https, :data
+      policy.object_src  :none
+      policy.script_src  :self, :https, :unsafe_inline, :unsafe_eval
+      policy.style_src   :self, :https, :unsafe_inline
+      policy.connect_src :self, :https, :ws, :wss, "http://localhost:3035", "ws://localhost:3035", "http://localhost:3000", "ws://localhost:3000"
+    end
+
+    # Generate CSP nonces for script and style tags
+    config.content_security_policy_nonce_generator = -> request { SecureRandom.base64(16) }
+    config.content_security_policy_nonce_directives = %w(script-src)
+
+    # Enable serving of static files
+    config.public_file_server.enabled = true
+
+    # Configure the asset pipeline
+    config.assets.enabled = true
+    config.assets.initialize_on_precompile = false
+    config.assets.compile = true
+    # config.assets.digest = true
+    config.assets.version = '1.0'
+
+    # Add additional assets to the asset load path
+    config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+    config.assets.paths << Rails.root.join('app', 'assets', 'images')
+
+    # Precompile additional assets
+    config.assets.precompile += %w( application.tailwind.css )
   end
 end

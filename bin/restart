@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# echo "Cleaning assets..."
+# rails assets:clobber
+
+# echo "Precompiling assets..."
+# rails assets:precompile
+
+echo "Stopping Rails server..."
+pkill -f "rails server" || true
+
+echo "Removing stale server PID file..."
+rm -f tmp/pids/server.pid
+
+echo "Starting Rails server..."
+bin/dev
+
+echo "Done! Server has been restarted with fresh assets." 

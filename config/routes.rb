@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -7,4 +9,16 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  namespace :api do
+    namespace :v1 do
+      resources :forecasts, only: [:create]
+    end
+  end
+
+  # Serve React frontend
+  root 'home#index'
+  get '*path', to: 'home#index', constraints: ->(request) { !request.xhr? && request.format.html? }
+
+  get 'forecast', to: 'forecast#index'
 end

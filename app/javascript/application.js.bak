@@ -1,0 +1,11 @@
+// Entry point for the build script in your package.json
+import "@hotwired/turbo-rails"
+import "./controllers"
+
+// Show page loaded message
+document.addEventListener("turbo:load", () => {
+  const title = document.querySelector("[data-forecast-target='title']")
+  if (title) {
+    title.textContent = "Weather Forecast - Page Loaded"
+  }
+}) 

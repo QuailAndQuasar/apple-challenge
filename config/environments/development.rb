@@ -11,6 +11,9 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
+  # Ensure assets are served without digests in development for importmap-rails.
+  config.assets.digest = true
+
   # Show full error reports.
   config.consider_all_requests_local = true
 
@@ -68,4 +71,9 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Enable serving of static files
+  config.public_file_server.enabled = true
+
+  config.log_level = :debug
 end
